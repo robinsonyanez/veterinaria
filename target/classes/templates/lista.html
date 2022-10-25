@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lista de Atenciones</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <!-- SweertAlert2 -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            function modal()
+            {
+                    const exampleModal = document.getElementById('exampleModal');
+                    exampleModal.addEventListener('show.bs.modal', event => {
+
+                    const button = event.relatedTarget;
+
+                    const id = button.getAttribute('data-bs-id');
+                    const mascota = button.getAttribute('data-bs-mascota');
+                    const servicio = button.getAttribute('data-bs-servicio');
+                    const costo = button.getAttribute('data-bs-costo');
+
+                    //const modalTitle = exampleModal.querySelector('.modal-title')
+                    //const modalBodyInput = exampleModal.querySelector('.modal-body input')
+                    const campoId = document.getElementById('id');
+                    const campoMascota = document.getElementById('masc');
+                    const campoServicio = document.getElementById('serv');
+                    const campoCosto = document.getElementById('cost');
+
+
+                    campoId.value = id;
+                    campoMascota.value = mascota;
+                    campoServicio.value = servicio;
+                    campoCosto.value = costo;
+                    //modalTitle.textContent = `New message to ${recipient}`
+                    //modalBodyInput.value = recipient
+                });
+            }
+
+            function Actualizar()
+            {
+                event.preventDefault();
+
+                const id = document.getElementById("id").value;
+                const masc = document.getElementById("masc").value;
+                const serv = document.getElementById("serv").value;
+                const cost = document.getElementById("cost").value;
+
+
+                if (masc == "" || serv == "" || cost == "")
+                {
+                    //Puedes aqui poner una alerta: llene los campos
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    });
+
+                } else
+                {
+                    Swal.fire({
+                        title: 'Do you want to save the changes?',
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'Save',
+                        denyButtonText: `Don't save`,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Saved!',
+                                text: '',
+                                icon: 'success',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const formulario = document.getElementById("actualizar");
+                                    formulario.submit();
+                                }
+                            });
+                        } else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info');
+                        }
+                    });
+                }
+            }
+            
+            function Registrar()
+            {
+                event.preventDefault();
+
+                const masc = document.getElementById("masc_r").value;
+                const serv = document.getElementById("serv_r").value;
+                const cost = document.getElementById("cost_r").value;
+
+
+                if (masc == "" || serv == "" || cost == "")
+                {
+                    //Puedes aqui poner una alerta: llene los campos
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    });
+
+                } else
+                {
+                    Swal.fire({
+                        title: 'Do you want to save the changes?',
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'Save',
+                        denyButtonText: `Don't save`,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Saved!',
+                                text: '',
+                                icon: 'success',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const formulario = document.getElementById("registrar");
+                                    formulario.submit();
+                                }
+                            });
+                        } else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info');
+                        }
+                    });
+                }
+            }
+            
+            function Eliminar(opcion)
+            {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your file has been deleted.',
+                            icon: 'success',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = opcion.href;
+                            }
+                        });
+
+                    }
+                });
+            }
+
+        </script>
+    </head>
+    <body onload="modal()">
+        <div class="container">
+            
+            <div th:insert="menu :: #menu_buscar"></div>
+
+            <hr>
+
+            <div>
+                <a th:href="@{/orden_asc}" class="btn btn-warning"><i class="bi bi-sort-up"></i></a>
+                <a th:href="@{/orden_desc}" class="btn btn-info"><i class="bi bi-sort-down"></i></a>
+            </div>
+
+            <hr>
+
+            <table class="table">
+                <tr class="table-dark">
+                    <th>#</th>
+                    <th>Id</th>
+                    <th>Mascota</th>
+                    <th>Servicio</th>
+                    <th>Costo</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+                
+                  <tr th:each="atencion,status : ${atenciones}">
+                    <td th:text="${status.count}"></td>
+                    <td th:text="${atencion.id}"></td>
+                    <td th:text="${atencion.mascota}"></td>
+                    <td th:text="${atencion.servicio}"></td>
+                    <td th:text="${atencion.costo}"></td>
+                    <td>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" th:attr="data-bs-id=${atencion.id},data-bs-mascota=${atencion.mascota},data-bs-servicio=${atencion.servicio},data-bs-costo=${atencion.costo}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <a onclick="return Eliminar(this)" th:href="@{/eliminar(id=${atencion.id})}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+              
+            </table>
+        </div>
+
+        
+        
+        <!-- Modal Registrar -->
+        <div class="modal fade" id="exampleModal_registrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="registrar" method="POST" id="registrar">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Registrar Atención</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Mascota:</label>
+                                <input type="text" class="form-control" id="masc_r" name="masc" required="required" placeholder="Ingresar nombre de mascota">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Servicio:</label>
+                                <input type="text" class="form-control" id="serv_r" name="serv" required="required" placeholder="Ingresar servicio">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Costo:</label>
+                                <input type="number" class="form-control" id="cost_r"  name="cost" required="required" step="0.01" min="0.01" placeholder="Ingresar costo">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button onclick="return Registrar()" type="submit" class="btn btn-primary">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Editar -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="actualizar" method="POST" id="actualizar">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Editar Atención</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <input type="hidden" id="id" name="id">
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Mascota:</label>
+                                <input type="text" class="form-control" id="masc" name="masc" required="required" placeholder="Ingresar nombre de mascota">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Servicio:</label>
+                                <input type="text" class="form-control" id="serv" name="serv" required="required" placeholder="Ingresar servicio">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Costo:</label>
+                                <input type="number" class="form-control" id="cost" name="cost" required="required" step="0.01" min="0.01" placeholder="Ingresar costo">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button onclick="return Actualizar()" type="submit" class="btn btn-success">Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
